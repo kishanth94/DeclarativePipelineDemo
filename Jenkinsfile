@@ -35,8 +35,8 @@ pipeline{
 				    echo "${WORKSPACE}"
 					echo "${DOCKER_TAG}"
 					        sh '''
-								 sudo grep -irl {DOCKER_TAG} ${WORKSPACE}/kubernetes/manifests-yamls/deployment.yaml | xargs sed -i "s/{DOCKER_TAG}/${DOCKER_TAG}/g"
-								 sudo scp -o StrictHostKeyChecking=no ${WORKSPACE}/kubernetes/manifests-yamls/*.yaml ansadmin@172.31.21.190:/opt/k8s-ansible/kubernetes/
+								 echo 'Pass123!@#' | sudo -S grep -irl {DOCKER_TAG} kubernetes/manifests-yamls/deployment.yaml | xargs sed -i "s/{DOCKER_TAG}/${DOCKER_TAG}/g"
+								 sudo scp -o StrictHostKeyChecking=no kubernetes/manifests-yamls/*.yaml ansadmin@172.31.21.190:/opt/k8s-ansible/kubernetes/
 							'''     
 				}
             }
