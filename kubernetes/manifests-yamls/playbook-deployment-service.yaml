@@ -1,6 +1,8 @@
 ---
 - name: Create pods using deployment and expose the service for the application
   hosts: localhost
+  become: yes
+  become_method: sudo
   
   collections:
   - community.kubernetes
@@ -8,8 +10,8 @@
   tasks: 
   - name: create a deployment
     shell: |
-      kubectl --kubeconfig=/home/ansadmin/.kube/config apply -f /opt/k8s-ansible/kubernetes/deployment.yaml
+      /home/ansadmin/bin/kubectl --kubeconfig=/home/ansadmin/.kube/config apply -f /opt/k8s-ansible/kubernetes/deployment.yaml
     
   - name: create a service
     shell: |
-      kubectl --kubeconfig=/home/ansadmin/.kube/config apply -f /opt/k8s-ansible/kubernetes/service.yaml
+      /home/ansadmin/bin/kubectl --kubeconfig=/home/ansadmin/.kube/config apply -f /opt/k8s-ansible/kubernetes/service.yaml
