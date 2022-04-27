@@ -45,7 +45,7 @@ pipeline{
         stage('Deploying application on k8s cluster from ansible-server using playbook') {
             steps {
                script{
-			        sh 'ssh -o StrictHostKeyChecking=no ansadmin@172.31.21.190 "kubectl config get-contexts; kubectl config use-context kubernetes-admin@kubernetes; whoami && hostname; ansible-playbook -i /opt/k8s-ansible/hosts /opt/k8s-ansible/kubernetes/playbook-deployment-service.yaml; sudo rm -rf /opt/k8s-ansible/kubernetes/*.yaml;"'   
+			        sh 'ssh -o StrictHostKeyChecking=no ansadmin@172.31.21.190 "/home/ansadmin/bin/kubectl config get-contexts; /home/ansadmin/bin/kubectl config use-context kubernetes-admin@kubernetes; whoami && hostname; ansible-playbook -i /opt/k8s-ansible/hosts /opt/k8s-ansible/kubernetes/playbook-deployment-service.yaml; sudo rm -rf /opt/k8s-ansible/kubernetes/*.yaml;"'   
                }
             }
         }	
