@@ -42,17 +42,6 @@ pipeline{
             }
         }
 
-        stage('manual approval'){
-            steps{
-                script{
-                    timeout(10) {
-                        mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> Go to build url and approve the deployment request <br> URL of the build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "${currentBuild.result} CI: Project name -> ${env.JOB_NAME}", to: "devopsawsfreetier@gmail.com";  
-                        input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
-                    }
-                }
-            }
-        }
-
         stage('Deploying application on k8s cluster from ansible-server using playbook') {
             steps {
                script{
@@ -74,10 +63,10 @@ pipeline{
     }
     
     post {
-	    //always {
-		//echo 'Deleting the Workspace'
-		//deleteDir() /* Clean Up our Workspace */
-	    //}
+	    always {
+		echo 'Deleting the Workspace'
+		deleteDir() /* Clean Up our Workspace */
+	    }
 	    success {
 		mail to: 'devopsawsfreetier@gmail.com',
 		     subject: "Success Build Pipeline: ${currentBuild.fullDisplayName}",
