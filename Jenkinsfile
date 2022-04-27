@@ -49,17 +49,6 @@ pipeline{
                }
             }
         }	
-
-        stage('verifying app deployment'){
-            steps{
-                script{
-                     withCredentials([kubeconfigFile(credentialsId: 'kubernetes-configs', variable: 'KUBECONFIG')]) {
-                         sh '/opt/kubectl run curl --image=curlimages/curl -i --rm --restart=Never -- curl sample-tomcat-service:8080'
-
-                     }
-                }
-            }
-        }		
     }
     
     post {
