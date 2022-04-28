@@ -45,17 +45,17 @@ pipeline{
         stage('Deploying application on k8s cluster from ansible-server using playbook') {
             steps {
                script{
-			        sh 'ssh -o StrictHostKeyChecking=no ansadmin@172.31.29.214 "/home/ansadmin/bin/kubectl config get-contexts; /home/ansadmin/bin/kubectl config use-context kubernetes-admin@kubernetes; whoami && hostname; ansible-playbook -i /opt/k8s-ansible/hosts /opt/k8s-ansible/kubernetes/playbook-deployment-service.yaml; sudo rm -rf /opt/k8s-ansible/kubernetes/*.yaml;"'   
+			        sh 'ssh -o StrictHostKeyChecking=no ansadmin@172.31.29.214 "/home/ansadmin/bin/kubectl config get-contexts; /home/ansadmin/bin/kubectl config use-context arn:aws:eks:ap-southeast-1:734348189425:cluster/demo-eks-cluster; whoami && hostname; ansible-playbook -i /opt/k8s-ansible/hosts /opt/k8s-ansible/kubernetes/playbook-deployment-service.yaml; sudo rm -rf /opt/k8s-ansible/kubernetes/*.yaml;"'   
                }
             }
         }	
     }
     
     post {
-	    always {
-		echo 'Deleting the Workspace'
-		deleteDir() /* Clean Up our Workspace */
-	    }
+	    //always {
+		//echo 'Deleting the Workspace'
+		//deleteDir() /* Clean Up our Workspace */
+	    //}
 	    success {
 		mail to: 'devopsawsfreetier@gmail.com',
 		     subject: "Success Build Pipeline: ${currentBuild.fullDisplayName}",
