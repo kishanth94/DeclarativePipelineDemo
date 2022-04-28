@@ -36,7 +36,7 @@ pipeline{
 					echo "${DOCKER_TAG}"
 					        sh '''
 								 echo 'Pass123!@#' | sudo -S grep -irl {DOCKER_TAG} kubernetes/manifests-yamls/deployment.yaml | xargs sed -i "s/{DOCKER_TAG}/${DOCKER_TAG}/g"
-								 sudo scp -o StrictHostKeyChecking=no kubernetes/manifests-yamls/*.yaml ansadmin@172.31.21.190:/opt/k8s-ansible/kubernetes/
+								 sudo scp -o StrictHostKeyChecking=no kubernetes/manifests-yamls/*.yaml ansadmin@172.31.29.214:/opt/k8s-ansible/kubernetes/
 							'''     
 				}
             }
@@ -45,7 +45,7 @@ pipeline{
         stage('Deploying application on k8s cluster from ansible-server using playbook') {
             steps {
                script{
-			        sh 'ssh -o StrictHostKeyChecking=no ansadmin@172.31.21.190 "/home/ansadmin/bin/kubectl config get-contexts; /home/ansadmin/bin/kubectl config use-context kubernetes-admin@kubernetes; whoami && hostname; ansible-playbook -i /opt/k8s-ansible/hosts /opt/k8s-ansible/kubernetes/playbook-deployment-service.yaml; sudo rm -rf /opt/k8s-ansible/kubernetes/*.yaml;"'   
+			        sh 'ssh -o StrictHostKeyChecking=no ansadmin@172.31.29.214 "/home/ansadmin/bin/kubectl config get-contexts; /home/ansadmin/bin/kubectl config use-context kubernetes-admin@kubernetes; whoami && hostname; ansible-playbook -i /opt/k8s-ansible/hosts /opt/k8s-ansible/kubernetes/playbook-deployment-service.yaml; sudo rm -rf /opt/k8s-ansible/kubernetes/*.yaml;"'   
                }
             }
         }	
